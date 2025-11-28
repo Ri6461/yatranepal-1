@@ -1,11 +1,13 @@
+import { Link } from "react-router-dom";
+
 const Login = () => {
   return (
     <>
       <nav class="navbar navbar-expand-lg bg-light">
         <div class="container">
-          <a class="navbar-brand fw-bold" href="#">
+          <Link class="navbar-brand fw-bold" to={"/"}>
             Yatra Nepal
-          </a>
+          </Link>
 
           <button
             class="navbar-toggler"
@@ -40,7 +42,7 @@ const Login = () => {
               </li>
             </ul>
 
-            <a class="btn btn-primary" href="#">
+            <a className="btn btn-primary" href="#">
               Login
             </a>
           </div>

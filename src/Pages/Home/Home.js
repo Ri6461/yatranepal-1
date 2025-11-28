@@ -1,11 +1,13 @@
-import { Navbar } from '../../Components/ExpComp';
+import { Navbar, Footer, Landing } from '../../Components/ExpComp';
 
 const Home = () => {
-    return (
-        <>
+  return (
+    <>
+      <Navbar />
+      <Landing />  {/* Added hero section */}
+      <Footer />
+    </>
+  );
+};
 
-            <Navbar />
-        </>
-    )
-}
 export default Home;
