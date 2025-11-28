@@ -4,7 +4,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <Landing />  {/* Added hero section */}
+      <Landing /> 
       <Footer />
     </>
   );
