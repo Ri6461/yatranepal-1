@@ -42,7 +42,7 @@ const Login = () => {
               </li>
             </ul>
 
-            <a className="btn btn-primary" href="#">
+            <a className="btn btn-primary" href="/login">
               Login
             </a>
           </div>
