@@ -45,7 +45,7 @@ const Landing = () => {
           {/* Right Image */}
           <Col md={6} className="text-center">
             <img
-              src="https://source.unsplash.com/600x400/?travel,adventure"
+              src="https://p1.hiclipart.com/preview/905/869/93/city-home-tourism-in-nepal-employment-kathmandu-place-of-worship-architecture-temple-png-clipart.jpg"
               alt="Travel Adventure"
               className="img-fluid rounded shadow-lg"
             />
