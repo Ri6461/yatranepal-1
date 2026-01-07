@@ -1,9 +1,9 @@
 import { Navbar, Footer, Landing } from '../../Components/ExpComp';
 
-const Home = () => {
+const Home = ({isLoggedIn} ) => {
   return (
     <>
-      <Navbar />
+      <Navbar isLoggedIn={isLoggedIn}  />
       <Landing /> 
       <Footer />
     </>

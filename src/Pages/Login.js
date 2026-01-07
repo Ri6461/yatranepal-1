@@ -1,5 +1,6 @@
-// Login.js
 import React, { useState } from "react";
+import axios from "axios";
+import Cookies from "js-cookie";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -7,22 +8,46 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+
+
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Simple validation
     if (!email || !password) {
       setError("Please fill in all fields.");
+      setSuccess("");
       return;
     }
 
-    // Example: fake login logic
-    if (email === "test@example.com" && password === "123456") {
-      setError(""); // clear error
-      alert("Login successful!");
-    } else {
-      setError("Invalid email or password.");
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        const token = response.data.token;
+
+        // ✅ Save token in cookie
+        Cookies.set("token", token, { expires: 1 }); // expires in 1 day
+
+        setError("");
+        setSuccess("Login successful! Redirecting...");
+
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 2000);
+      }
+    } catch (err) {
+      if (err.response && err.response.data.error) {
+        setError(err.response.data.error);
+      } else {
+        setError("Server error. Please try again later.");
+      }
+      setSuccess("");
     }
   };
 
@@ -43,6 +68,7 @@ const Login = () => {
               <h2 className="text-center mb-4">Login</h2>
 
               {error && <Alert variant="danger">{error}</Alert>}
+              {success && <Alert variant="success">{success}</Alert>}
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formEmail">

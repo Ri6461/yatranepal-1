@@ -1,4 +1,3 @@
-// Register.js
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -9,8 +8,9 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validation
@@ -18,15 +18,34 @@ const Register = () => {
       setError("Please fill in all fields.");
       return;
     }
-
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
 
-    // Example: fake registration logic
-    setError("");
-    alert("Registration successful!");
+    try {
+      const res = await fetch("http://localhost:5000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Signup failed");
+        setSuccess("");
+      } else {
+        setSuccess(data.message);
+        setError("");
+        setName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      }
+    } catch (err) {
+      setError("Server error: " + err.message);
+    }
   };
 
   return (
@@ -46,6 +65,7 @@ const Register = () => {
               <h2 className="text-center mb-4">Register</h2>
 
               {error && <Alert variant="danger">{error}</Alert>}
+              {success && <Alert variant="success">{success}</Alert>}
 
               <Form onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formName">
