@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+import "./Auth.css";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -13,7 +13,6 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validation
     if (!name || !email || !password || !confirmPassword) {
       setError("Please fill in all fields.");
       return;
@@ -49,85 +48,75 @@ const Register = () => {
   };
 
   return (
-    <section
-      style={{
-        height: "100vh",
-        background: "linear-gradient(135deg, #1e3c72 0%, #2a5298 100%)",
-        color: "#fff",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <Container>
-        <Row className="justify-content-center">
-          <Col md={6} lg={4}>
-            <div className="p-4 bg-dark rounded shadow-lg">
-              <h2 className="text-center mb-4">Register</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Create an Account</h2>
 
-              {error && <Alert variant="danger">{error}</Alert>}
-              {success && <Alert variant="success">{success}</Alert>}
+        {error && <div className="alert alert-error">{error}</div>}
+        {success && <div className="alert alert-success">{success}</div>}
 
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formName">
-                  <Form.Label>Name</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter your name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </Form.Group>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label className="form-label" htmlFor="name">Full Name</label>
+            <input
+              id="name"
+              type="text"
+              className="form-input"
+              placeholder="John Doe"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
 
-                <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
+          <div className="form-group">
+            <label className="form-label" htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              className="form-input"
+              placeholder="john@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
+          <div className="form-group">
+            <label className="form-label" htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              className="form-input"
+              placeholder="******"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-                <Form.Group className="mb-3" controlId="formConfirmPassword">
-                  <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Confirm password"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </Form.Group>
+          <div className="form-group">
+            <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              className="form-input"
+              placeholder="******"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
 
-                <Button
-                  type="submit"
-                  variant="warning"
-                  className="w-100 fw-bold"
-                >
-                  Register
-                </Button>
-              </Form>
+          <button type="submit" className="btn auth-btn">
+            Sign Up
+          </button>
+        </form>
 
-              <p className="mt-3 text-center">
-                Already registered?{" "}
-                <a href="/login" style={{ color: "#ffd700" }}>
-                  Login Now
-                </a>
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+        <div className="auth-footer">
+          Already have an account? 
+          <Link to="/login" className="auth-link">
+            Log in
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

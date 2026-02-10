@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
+import "./Auth.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,10 +27,7 @@ const Login = () => {
 
       if (response.status === 200) {
         const token = response.data.token;
-
-        // ✅ Save token in cookie
-        Cookies.set("token", token, { expires: 1 }); // expires in 1 day
-
+        Cookies.set("token", token, { expires: 1 });
         setError("");
         setSuccess("Login successful! Redirecting...");
 
@@ -52,65 +46,51 @@ const Login = () => {
   };
 
   return (
-    <section
-      style={{
-        height: "100vh",
-        background: "linear-gradient(135deg, #2a5298 0%, #1e3c72 100%)",
-        color: "#fff",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      <Container>
-        <Row className="justify-content-center">
-          <Col md={6} lg={4}>
-            <div className="p-4 bg-dark rounded shadow-lg">
-              <h2 className="text-center mb-4">Login</h2>
+    <div className="auth-container">
+      <div className="auth-card">
+        <h2 className="auth-title">Login to Yatra Nepal</h2>
 
-              {error && <Alert variant="danger">{error}</Alert>}
-              {success && <Alert variant="success">{success}</Alert>}
+        {error && <div className="alert alert-error">{error}</div>}
+        {success && <div className="alert alert-success">{success}</div>}
 
-              <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3" controlId="formEmail">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </Form.Group>
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="form-group">
+            <label className="form-label" htmlFor="email">Email Address</label>
+            <input
+              id="email"
+              type="email"
+              className="form-input"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-                <Form.Group className="mb-3" controlId="formPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </Form.Group>
+          <div className="form-group">
+            <label className="form-label" htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              className="form-input"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
 
-                <Button
-                  type="submit"
-                  variant="warning"
-                  className="w-100 fw-bold"
-                >
-                  Submit
-                </Button>
-              </Form>
+          <button type="submit" className="btn auth-btn">
+            Login
+          </button>
+        </form>
 
-              <p className="mt-3 text-center">
-                Not registered?{" "}
-                <a href="/register" style={{ color: "#ffd700" }}>
-                  Register Now
-                </a>
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+        <div className="auth-footer">
+          Don't have an account? 
+          <Link to="/register" className="auth-link">
+            Sign up
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 };
 

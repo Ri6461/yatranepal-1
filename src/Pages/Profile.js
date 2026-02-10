@@ -1,29 +1,39 @@
 import React from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar } from "../Components/ExpComp";
+import "./Profile.css";
 
-const Profile = ({ profile, isLoggedIn }) => {
-  console.log(profile)
+const Profile = ({ profile }) => {
+  if (!profile) {
+    return (
+        <div className="profile-container">
+            <div className="profile-card">
+                <p>Loading profile...</p>
+            </div>
+        </div>
+    );
+  }
 
   return (
-    <>
-    <Navbar isLoggedIn={isLoggedIn}/>
-      <Container className="mt-5">
-        <Row className="justify-content-center">
-          <Col md={6} lg={4}>
-            <Card className="shadow-lg">
-              <Card.Body className="text-center">
-                <Card.Title className="mb-3">Profile</Card.Title>
-                <h4 className="fw-bold">{profile.name}</h4>
-                {/* If you want to show email later, uncomment below */}
-                <p className="text-muted">{profile.email}</p>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
-    </>
+    <div className="profile-container">
+      <div className="profile-card">
+        <div className="profile-header">
+           <div className="profile-avatar">
+              {profile.name ? profile.name.charAt(0).toUpperCase() : "U"}
+           </div>
+           <h2>My Profile</h2>
+        </div>
+        
+        <div className="profile-details">
+            <div className="profile-group">
+                <label>Full Name</label>
+                <p className="profile-value">{profile.name}</p>
+            </div>
+            <div className="profile-group">
+                <label>Email Address</label>
+                 <p className="profile-value">{profile.email}</p>
+            </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

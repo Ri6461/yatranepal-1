@@ -1,6 +1,7 @@
 import "./App.css";
+import Layout from "./Components/Layout/Layout";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { Home, Login, Register, Profile } from "./Pages/ExpPage";
+import { Home, Login, Register, Profile, Packages, PackageDetails, About, Contact } from "./Pages/ExpPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -54,21 +55,27 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
-        <Route
-          path="/login"
-          element={isLoggedIn ? <Navigate to="/" /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={isLoggedIn ? <Navigate to="/" /> : <Register />}
-        />
-        <Route
-          path="/profile"
-          element={isLoggedIn ? <Profile  profile={profile} isLoggedIn={isLoggedIn}/>: <Navigate to="/" />  }
-        />
-      </Routes>
+      <Layout isLoggedIn={isLoggedIn}>
+        <Routes>
+          <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
+          <Route path="/packages" element={<Packages />} />
+          <Route path="/packages/:id" element={<PackageDetails />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route
+            path="/login"
+            element={isLoggedIn ? <Navigate to="/" /> : <Login />}
+          />
+          <Route
+            path="/register"
+            element={isLoggedIn ? <Navigate to="/" /> : <Register />}
+          />
+          <Route
+            path="/profile"
+            element={isLoggedIn ? <Profile profile={profile} isLoggedIn={isLoggedIn}/> : <Navigate to="/login" />  }
+          />
+        </Routes>
+      </Layout>
     </BrowserRouter>
   );
 }
