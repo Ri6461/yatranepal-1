@@ -6,3 +6,4 @@ export { default as Packages } from "./Packages/Packages";
 export { default as PackageDetails } from "./PackageDetails/PackageDetails";
 export { default as About } from "./About/About";
 export { default as Contact } from "./Contact/Contact";
+export { default as Verify } from "./Verify"
