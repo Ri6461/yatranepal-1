@@ -1,7 +1,7 @@
 import "./App.css";
 import Layout from "./Components/Layout/Layout";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
-import { Home, Login, Register, Profile, Packages, PackageDetails, About, Contact } from "./Pages/ExpPage";
+import { Home, Login, Register, Profile, Packages, PackageDetails, About, Contact, Verify } from "./Pages/ExpPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -11,6 +11,7 @@ function App() {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  document.title = "Yatra Nepal"
   // ✅ Create axios instance
   const api = axios.create({
     baseURL: "http://localhost:5000",
@@ -62,6 +63,7 @@ function App() {
           <Route path="/packages/:id" element={<PackageDetails />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/verify/:id" element={<Verify/>}/>
           <Route
             path="/login"
             element={isLoggedIn ? <Navigate to="/" /> : <Login />}
